@@ -90,6 +90,14 @@ struct HomeView: View {
             }
             .padding(.horizontal, 13)
             
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(products) { product in
+                        ProductCard(title: product.title, subTitle: product.subTitle, price: product.price)
+                    }
+                }.padding()
+            }
+            
             Spacer()
         }
     }
@@ -102,6 +110,55 @@ struct HeaderView: View {
             Spacer()
             Image("search_outline")
         }.padding(.horizontal, 13)
+    }
+}
+
+struct ProductCard: View {
+    
+    private var title: String
+    private var subTitle: String
+    private var price: Float
+    
+    init(title: String, subTitle: String, price: Float) {
+        self.title = title
+        self.subTitle = subTitle
+        self.price = price
+    }
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            VStack(alignment: .center, spacing: 3) {
+                Spacer()
+                Text(self.title)
+                    .fontWeight(.bold)
+                Text(self.subTitle)
+                    .font(.system(size: 13))
+                    .foregroundColor(.gray)
+                Text("$ \(String(self.price))")
+                    .fontWeight(.bold)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 15)
+            .padding(.bottom, 30)
+            .background(Color("Color"))
+            .cornerRadius(150)
+            .frame(height: 240)
+            
+            
+            Button(action: {}) {
+                Image("plus_outline")
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 10)
+                    .background(Color(.black))
+                    .cornerRadius(45)
+            }.padding(.top, 210)
+            
+            Image("food_image_2")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
+                .padding(.top, -25)
+        }
     }
 }
 
@@ -121,8 +178,23 @@ class Category: Identifiable {
     }
 }
 
+struct Product: Identifiable {
+    var id = UUID()
+    var title: String
+    var subTitle: String
+    var price: Float
+}
+
 var categories: [Category] = [
     Category(title: "Salads"),
     Category(title: "Soups"),
     Category(title: "Grilled")
+]
+
+var products: [Product] = [
+    Product(title: "Mixed Salad", subTitle: "Mix Vegetables", price: 24),
+    Product(title: "Mixed Salad", subTitle: "Mix Vegetables", price: 24),
+    Product(title: "Mixed Salad", subTitle: "Mix Vegetables", price: 24),
+    Product(title: "Mixed Salad", subTitle: "Mix Vegetables", price: 24),
+    Product(title: "Mixed Salad", subTitle: "Mix Vegetables", price: 24)
 ]
